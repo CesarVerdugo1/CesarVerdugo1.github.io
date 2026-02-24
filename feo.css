@@ -51,7 +51,7 @@ th {
 }
 
 td {
-    background-image: url(cher.jpg);
+    background-image: url(cher.jpeg);
     background-size: cover;
     -webkit-text-stroke: 2px pink;
 }
@@ -60,4 +60,5 @@ img {
     width: 500px;
     height: 100px;
     border: 8px double black;
+
 }
