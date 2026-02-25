@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi página con Picnic CSS</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/picnic">
+
+  <style>
+    .flex.demo{
+     margin: .2em 0;
+     background: #2ecc40;
+     text-align: center;
+    }
+    .flex.demo div {
+      border:.1em solid pink;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="tabs two">
+    
+    <input id="tab1" type="radio" name="tabs" checked>
+    <label for="tab1">Domingo</label>
+    
+    <input id="tab2" type="radio" name="tabs">
+    <label for="tab2">Contexto actual</label>
+
+    <div class="row">
+      
+      
+      <div>
+        <h3>¿Cómo fue tu vivencia el domingo?</h3>
+        <p>
+          Me desperté muy tarde, entonces todo el suceso ya había prácticamente terminado,
+          pero nos quedamos sin agua potable por 2 días debido a que justo se nos había terminado.
+        </p>
+      </div>
+
+      <div>
+        <h3>¿Qué te gustaría que cambiara?</h3>
+        <p>
+          Me gustaría que el país fuera más seguro ya que yo soy de Culiacán,
+          por lo que no es la primera vez que me toca vivir algo como esto.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <button id="musico">Ve por mi artista favorito</button>
+  <button id="badbunny">Ve por el artista favorito de mi amigo</button>
+
+  <div class="flex two four-1200 demo">
+    <div id="bio">1</div>
+    <div id="imagen">2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+  </div>
+
+    <script>
+    
+    let biografia;
+
+    document.addEventListener("DOMContentLoaded", function() {
+          biografia = document.getElementById("bio");
+          document.getElementById("musico").addEventListener("click", function() {
+            obtenerJSON("Zoe");
+          });
+          document.getElementById("badbunny").addEventListener("click", function() {
+            obtenerJSON("Bad Bunny");
+          });
+          console.log("DOM listo");
+    });
+
+
+     async function obtenerJSON(nombreArtista) {
+       const respuesta = await fetch(`https://www.theaudiodb.com/api/v1/json/123/search.php?s=${encodeURIComponent(nombreArtista)}`);
+       const datos = await respuesta.json();
+       console.log(datos);
+
+        biografia.innerHTML = "";
+
+        const textoArtista = document.createElement('p');
+        textoArtista.textContent = datos.artists[0].strBiographyEN;
+        biografia.appendChild(textoArtista);
+
+        const imagenArtista= document.createElement('img', {src: datos.artists[0].strArtistThumb});
+        imagenArtista.setAttribute('src', datos.artists[0].strArtistThumb);
+        biografia.appendChild(imagenArtista);
+     }
+
+    </script>
+</body>
+</html>
